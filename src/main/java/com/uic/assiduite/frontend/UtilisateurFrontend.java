@@ -6,8 +6,6 @@ import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.service.CustomUserDetailsService;
 import com.uic.assiduite.service.RoleService;
 import com.uic.assiduite.service.UtilisateurService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,15 +45,17 @@ public class UtilisateurFrontend {
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
         // create model object to store form data
-        UtilisateurDto utilisateur = new UtilisateurDto();
+        List<Roles> listRoles = roleService.getAllRoles();
+        Utilisateurs utilisateur = new Utilisateurs();
+        model.addAttribute("listroles", listRoles);
         model.addAttribute("utilisateur", utilisateur);
         return "register";
     }
 
     @PostMapping("/register/save")
-    public String registration(@Valid @ModelAttribute("utilisateur") Utilisateurs utilisateur, BindingResult result, Model model){
+    public String registration(HttpServletRequest request, HttpServletResponse response, @Valid @ModelAttribute("utilisateur") Utilisateurs utilisateur, BindingResult result, Model model){
         Utilisateurs existingUser = utilisateurService.getUserByEmail(utilisateur.getEmail());
-
+        String roleName = request.getParameter("roleName");
         if(existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
             result.rejectValue("email", null,
                     "There is already an account registered with the same email");
@@ -65,6 +65,8 @@ public class UtilisateurFrontend {
             model.addAttribute("utilisateur", utilisateur);
             return "/register";
         }
+        Roles role = roleService.getRoleByName(roleName);
+        utilisateur.setRole(role);
 
         utilisateurService.createUser(utilisateur);
         return "redirect:/register?success";
@@ -102,36 +104,7 @@ public class UtilisateurFrontend {
         return "redirect:/index";
     }
 
-    @GetMapping("/{id}/edit")
-    public String editUser(@PathVariable int id, Model model) {
-        Optional<Utilisateurs> optionalUser = utilisateurService.getUserById(id);
-        if (optionalUser.isPresent()) {
-            Utilisateurs user = optionalUser.get();
-            List<Roles> roles = roleService.getAllRoles();
-            model.addAttribute("user", user);
-            model.addAttribute("roles", roles);
-            return "edit-user";
-        } else {
-            return "redirect:/index";
-        }
-    }
 
-    @PostMapping("utilisateurs")
-    public String createUser(Utilisateurs user) {
-        utilisateurService.createUser(user);
-        return "redirect:/index";
-    }
 
-    @PutMapping("/{id}")
-    public String updateUser(@PathVariable int id, Utilisateurs user) {
-        Optional<Utilisateurs> optionalUser = utilisateurService.updateUser(id, user);
-        return optionalUser.map(u -> "redirect:/index").orElse("redirect:/index");
-    }
 
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable int id) {
-        utilisateurService.deleteUser(id);
-        return "redirect:/users";
-    }
-    
 }

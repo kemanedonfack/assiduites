@@ -27,4 +27,8 @@ public class RoleService {
         return roleRepository.save(role);
     }
 
+    public Roles getRoleByName(String nom){
+        return roleRepository.findRolesByNom(nom);
+    }
+
 }
