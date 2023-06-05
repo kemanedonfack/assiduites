@@ -6,12 +6,13 @@ spring:
     suffix: .html
     prefix: classpath:/pages/
   datasource:
-    url: jdbc:mysql://localhost:3306/assiduite?createDatabaseIfNotExist=true
-    username: root
-    password: kemane
+    url: jdbc:mysql://localhost:3306/assiduite
+    username: julie
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
 server:
-  port: 8088
+  port: 8080

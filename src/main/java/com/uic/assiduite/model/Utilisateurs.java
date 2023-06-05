@@ -1,5 +1,6 @@
 package com.uic.assiduite.model;
 
+import java.io.Serializable;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @Entity
 @Table(name = "utilisateurs")
-public class Utilisateurs {
+public class Utilisateurs implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

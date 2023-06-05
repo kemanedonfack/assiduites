@@ -1,7 +1,10 @@
 package com.uic.assiduite.controller;
 
+import com.google.zxing.WriterException;
 import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.service.UtilisateurService;
+import com.uic.assiduite.utils.QRCodeGenerator;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +20,14 @@ public class UtilisateurController {
     private UtilisateurService UtilisateurService;
 
     @GetMapping
-    public List<Utilisateurs> getAllUsers() {
+    public List<Utilisateurs> getAllUsers() throws WriterException, IOException {
+        // Générer le qrcode pour les étudiants
+        List<Utilisateurs> users = UtilisateurService.getAllUsers();
+        for(Utilisateurs user : users){
+            if("ETUDIANT".equals(user.getRole().getNom())){
+                QRCodeGenerator.QRCodeGenerator(user);
+            }
+        }
         return UtilisateurService.getAllUsers();
     }
 
