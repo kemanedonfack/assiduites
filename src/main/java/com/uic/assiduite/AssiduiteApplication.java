@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @SpringBootApplication
 @EnableWebSecurity
@@ -29,16 +27,16 @@ public class AssiduiteApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Roles role1 = new Roles(1, "ETUDIANT");
-		Roles role2 = new Roles(2, "ENSEIGNANT");
-		Roles role3 = new Roles(3, "ADMINISTRATEUR");
+		Roles etudiant = new Roles(1, "ETUDIANT");
+		Roles enseignant = new Roles(2, "ENSEIGNANT");
+		Roles administrateur = new Roles(3, "ADMINISTRATEUR");
 
-		roleService.createRole(role1);
-		roleService.createRole(role2);
-		roleService.createRole(role3);
+		roleService.createRole(etudiant);
+		roleService.createRole(enseignant);
+		roleService.createRole(administrateur);
 
-		//Utilisateurs utilisateur = new Utilisateurs(1, "A4AHJ", "Donfack", "Kemane", "kemanedonfack5@gamil.com", "admin", "admin", role1);
-		//utilisateurService.createUser(utilisateur);
+		Utilisateurs utilisateur = new Utilisateurs(1, "A4AHJ", "Admin", "Admin", "admin@gmail.com", "admin", administrateur);
+		utilisateurService.createUser(utilisateur);
 
 	}
 

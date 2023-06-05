@@ -1,3 +1,4 @@
+
 package com.uic.assiduite.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -27,20 +29,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/login").permitAll() // Page de connexion accessible à tous
-                .antMatchers("/register/**").permitAll()
-                .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
-                .and()
-                .formLogin()
-                .loginPage("/login") // Page de connexion personnalisée
-                .defaultSuccessUrl("/", true) // Redirection après une authentification réussie
-                .and()
-                .logout()
-                .logoutUrl("/logout") // URL de déconnexion personnalisée
-                .logoutSuccessUrl("/login?logout") // Redirection après une déconnexion réussie
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID");
+
+        http.csrf().disable().authorizeRequests().antMatchers("/login","/register/**", "/js/**", "/css/**", "/vendors/**", "/img/**")
+                .permitAll().anyRequest().authenticated().and().httpBasic().and().formLogin().loginPage("/login").permitAll().and()
+                .logout().invalidateHttpSession(true).clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll();
     }
 
     @Override
