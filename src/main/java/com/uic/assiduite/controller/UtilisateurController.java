@@ -1,7 +1,9 @@
 package com.uic.assiduite.controller;
 
+import com.uic.assiduite.model.Assiduites;
 import com.uic.assiduite.model.AuthRequest;
 import com.uic.assiduite.model.Utilisateurs;
+import com.uic.assiduite.service.AssiduiteService;
 import com.uic.assiduite.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +25,9 @@ public class UtilisateurController {
 
     @Autowired
     private UtilisateurService utilisateurService;
+
+    @Autowired
+    private AssiduiteService assiduiteService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -69,6 +77,49 @@ public class UtilisateurController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/present/{matricule}")
+    public ResponseEntity<Void> setPresent(@PathVariable String matricule) {
+        Optional<Utilisateurs> getUser = utilisateurService.getUserByMatricule(matricule);
+
+        if (getUser.isPresent()){
+            LocalDateTime now = LocalDateTime.now();
+            LocalDate currentDate = now.toLocalDate();
+            //LocalTime test = LocalTime.from(LocalDateTime.of(2023, 02, 13, 10, 02,22));
+            // Appeler la fonction pour déterminer la période à laquelle la date appartient
+            String periode = determinePeriode(now.toLocalTime());
+
+            // Faire quelque chose avec la période (par exemple, l'afficher)
+            System.out.println("Période : " + periode+ " Date :"+currentDate);
+
+            Assiduites assiduites = new Assiduites();
+            assiduites.setPeriode(periode);
+            assiduites.setDateJour(currentDate);
+            assiduites.setUtilisateurs(getUser.get());
+            assiduiteService.save(assiduites);
+
+            return ResponseEntity.ok().build();
+        }else {
+
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
+    private String determinePeriode(LocalTime currentTime) {
+        LocalTime startMorning = LocalTime.of(9, 0);
+        LocalTime endMorning = LocalTime.of(12, 0);
+        LocalTime startAfternoon = LocalTime.of(13, 0);
+        LocalTime endAfternoon = LocalTime.of(16, 0);
+
+        if (currentTime.isAfter(startMorning) && currentTime.isBefore(endMorning)) {
+            return "9h - 12h";
+        } else if (currentTime.isAfter(startAfternoon) && currentTime.isBefore(endAfternoon)) {
+            return "13h - 16h";
+        } else {
+            return "Autre période";
         }
     }
 }

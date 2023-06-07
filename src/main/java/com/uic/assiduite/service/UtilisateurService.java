@@ -51,4 +51,9 @@ public class UtilisateurService {
         utilisateurRepository.deleteById(id);
         return true;
     }
+
+    public Optional<Utilisateurs> getUserByMatricule(String matricule){
+
+        return utilisateurRepository.findUtilisateursByMatricule(matricule);
+    }
 }
