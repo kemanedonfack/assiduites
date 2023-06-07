@@ -1,6 +1,7 @@
 package com.uic.assiduite.model;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -17,6 +18,7 @@ public class Utilisateurs {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotEmpty
+    @Column(unique = true)
     private String matricule;
     @NotEmpty
     private String nom;
@@ -32,4 +34,9 @@ public class Utilisateurs {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Roles role;
+
+    @ManyToOne
+    @Nullable
+    @JoinColumn(name = "filiere_id")
+    private Filieres filieres;
 }
