@@ -35,8 +35,12 @@ public class AssiduiteApplication implements CommandLineRunner {
 		roleService.createRole(enseignant);
 		roleService.createRole(administrateur);
 
-		Utilisateurs utilisateur = new Utilisateurs(1, "A4AHJ", "Admin", "Admin", "admin@gmail.com", "admin", administrateur);
+		Utilisateurs utilisateur = new Utilisateurs(1, "IUC11", "Admin", "Admin", "admin@gmail.com", "admin", administrateur);
+		Utilisateurs utilisateur2 = new Utilisateurs(2, "IUC10", "Donfack", "Kemane", "kemane@gmail.com", "kemane", etudiant);
+		Utilisateurs utilisateur3 = new Utilisateurs(3, "IUC12", "Eboa", "Julie", "julie@gmail.com", "julie", etudiant);
 		utilisateurService.createUser(utilisateur);
+		utilisateurService.createUser(utilisateur2);
+		utilisateurService.createUser(utilisateur3);
 
 	}
 

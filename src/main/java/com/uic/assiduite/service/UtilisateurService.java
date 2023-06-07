@@ -56,4 +56,8 @@ public class UtilisateurService {
 
         return utilisateurRepository.findUtilisateursByMatricule(matricule);
     }
+
+    public List<Utilisateurs> getEtudiants(){
+        return utilisateurRepository.getEtudiants();
+    }
 }

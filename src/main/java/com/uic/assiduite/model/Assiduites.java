@@ -20,7 +20,7 @@ public class Assiduites {
     private int id;
     private LocalDate dateJour;
     private String periode;
-    private int nbreHeure = 0;
+    private int nbreHeure;
 
     @ManyToOne
     @JoinColumn(name = "utilisateur_id")

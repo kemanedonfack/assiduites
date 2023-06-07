@@ -27,9 +27,6 @@ public class UtilisateurController {
     private UtilisateurService utilisateurService;
 
     @Autowired
-    private AssiduiteService assiduiteService;
-
-    @Autowired
     private AuthenticationManager authenticationManager;
 
     @GetMapping
@@ -80,46 +77,4 @@ public class UtilisateurController {
         }
     }
 
-    @GetMapping("/present/{matricule}")
-    public ResponseEntity<Void> setPresent(@PathVariable String matricule) {
-        Optional<Utilisateurs> getUser = utilisateurService.getUserByMatricule(matricule);
-
-        if (getUser.isPresent()){
-            LocalDateTime now = LocalDateTime.now();
-            LocalDate currentDate = now.toLocalDate();
-            //LocalTime test = LocalTime.from(LocalDateTime.of(2023, 02, 13, 10, 02,22));
-            // Appeler la fonction pour déterminer la période à laquelle la date appartient
-            String periode = determinePeriode(now.toLocalTime());
-
-            // Faire quelque chose avec la période (par exemple, l'afficher)
-            System.out.println("Période : " + periode+ " Date :"+currentDate);
-
-            Assiduites assiduites = new Assiduites();
-            assiduites.setPeriode(periode);
-            assiduites.setDateJour(currentDate);
-            assiduites.setUtilisateurs(getUser.get());
-            assiduiteService.save(assiduites);
-
-            return ResponseEntity.ok().build();
-        }else {
-
-            return ResponseEntity.notFound().build();
-        }
-
-    }
-
-    private String determinePeriode(LocalTime currentTime) {
-        LocalTime startMorning = LocalTime.of(9, 0);
-        LocalTime endMorning = LocalTime.of(12, 0);
-        LocalTime startAfternoon = LocalTime.of(13, 0);
-        LocalTime endAfternoon = LocalTime.of(16, 0);
-
-        if (currentTime.isAfter(startMorning) && currentTime.isBefore(endMorning)) {
-            return "9h - 12h";
-        } else if (currentTime.isAfter(startAfternoon) && currentTime.isBefore(endAfternoon)) {
-            return "13h - 16h";
-        } else {
-            return "Autre période";
-        }
-    }
 }
