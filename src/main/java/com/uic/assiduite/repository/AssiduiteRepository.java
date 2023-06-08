@@ -13,5 +13,6 @@ import java.util.Optional;
 public interface AssiduiteRepository extends JpaRepository<Assiduites, Integer> {
     boolean existsByDateJourAndPeriode(LocalDate dateJour, String periode);
     Optional<Assiduites> findByUtilisateursAndDateJourAndPeriode(Utilisateurs utilisateur, LocalDate dateJour, String periode);
+    Optional<Assiduites> findByUtilisateursAndDateJour(Utilisateurs utilisateur, LocalDate dateJour);
 
 }

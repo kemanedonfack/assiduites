@@ -1,5 +1,6 @@
 package com.uic.assiduite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
@@ -29,6 +30,7 @@ public class Utilisateurs {
     @NotEmpty(message = "Email should not be empty")
     private String email;
     @NotEmpty(message = "Password should not be empty")
+    @JsonIgnore
     private String password;
 
     @ManyToOne

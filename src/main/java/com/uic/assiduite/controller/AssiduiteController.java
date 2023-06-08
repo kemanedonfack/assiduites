@@ -5,6 +5,7 @@ import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.service.AssiduiteService;
 import com.uic.assiduite.service.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,6 +78,24 @@ public class AssiduiteController {
             return ResponseEntity.notFound().build();
         }
 
+    }
+    @GetMapping("day/{matricule}/{date}")
+    public ResponseEntity<Assiduites> getAssiduite(@PathVariable String matricule, @PathVariable String date) {
+        Optional<Utilisateurs> getUser = utilisateurService.getUserByMatricule(matricule);
+
+        if (getUser.isPresent()){
+            LocalDate currentDate = LocalDate.parse(date);
+            Optional<Assiduites> assiduites = assiduiteService.getAssiduiteByUtilisateurDate(getUser.get(), currentDate);
+            if (assiduites.isPresent()){
+                return new  ResponseEntity<>(assiduites.get(), HttpStatus.OK);
+            } else {
+
+                return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            }
+        }else {
+
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+        }
     }
 
     private String determinePeriode(LocalTime currentTime) {

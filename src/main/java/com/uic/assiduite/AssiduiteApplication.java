@@ -46,7 +46,7 @@ public class AssiduiteApplication implements CommandLineRunner {
 
 		Utilisateurs utilisateur = new Utilisateurs(1, "IUC11", "Admin", "Admin", "admin@gmail.com", "admin", administrateur, null);
 		Utilisateurs utilisateur2 = new Utilisateurs(2, "IUC10", "Donfack", "Kemane", "kemane@gmail.com", "kemane", etudiant, filieres);
-		Utilisateurs utilisateur3 = new Utilisateurs(3, "IUC12", "Eboa", "Julie", "julie@gmail.com", "julie", etudiant, filieres);
+		Utilisateurs utilisateur3 = new Utilisateurs(3, "IUC12", "Eboa", "Julie", "julie@gmail.com", "julie", etudiant, filieres2);
 		utilisateurService.createUser(utilisateur);
 		utilisateurService.createUser(utilisateur2);
 		utilisateurService.createUser(utilisateur3);
