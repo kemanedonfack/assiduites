@@ -1,0 +1,65 @@
+<div th:fragment="sidebar">
+    <div class="left-sidebar-pro">
+        <nav id="sidebar" class="">
+            <div class="sidebar-header">
+                <a th:href="@{/index.html}"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
+                <strong><a th:href="@{/index}"><img src="img/logo/logosn.png" alt="" /></a></strong>
+            </div>
+            <div class="left-custom-menu-adp-wrap comment-scrollbar">
+                <nav class="sidebar-nav left-sidebar-menu-pro">
+                    <ul class="metismenu" id="menu1">
+                        <li class="active">
+                            <a th:href="@{/index}" title="Dashboard" aria-expanded="false">
+                                <span class="fa fa-dashboard icon-wrap"></span>
+                                <span class="mini-click-non">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a title="Landing Page" th:href="@{/request}" aria-expanded="false"><span
+                                    class="fa fa-envelope icon-wrap sub-icon-mg" aria-hidden="true"></span>
+                                <span class="mini-click-non">Requêtes</span></a>
+                        </li>
+                        <li>
+                            <a title="Landing Page" th:href="@{/events.html}" aria-expanded="false"><span
+                                    class="fa fa-list icon-wrap sub-icon-mg" aria-hidden="true"></span>
+                                <span class="mini-click-non">Absences</span></a>
+                        </li>
+                        <li>
+                            <a title="Landing Page" th:href="@{/attendance}" aria-expanded="false"><span
+                                    class="fa fa-pencil-square-o icon-wrap sub-icon-mg" aria-hidden="true"></span>
+                                <span class="mini-click-non">Présences</span></a>
+                        </li>
+                        <li>
+                            <a class="has-arrow" th:href="@{/all-professors.html}" aria-expanded="false"><span
+                                    class="fa fa-user icon-wrap"></span> <span
+                                    class="mini-click-non">Utilisateurs</span></a>
+                            <ul class="submenu-angle" aria-expanded="false">
+                                <li><a title="All Professors" th:href="@{/users}"><span
+                                            class="mini-sub-pro">
+                                            Utilisateurs</span></a></li>
+                                <li><a title="Add Professor" th:href="@{/add-professor.html}"><span
+                                            class="mini-sub-pro">Nouvel Utilisateur</span></a></li>
+                                <li><a title="Edit Professor" th:href="@{/edit-professor.html}"><span
+                                            class="mini-sub-pro">Editer un utilisateur</span></a></li>
+                            </ul>
+                        </li>
+
+
+                        <li id="removable">
+                            <a class="has-arrow" th:href="@{/#}" aria-expanded="false"><span
+                                    class="fa fa-folder icon-wrap"></span> <span
+                                    class="mini-click-non">Pages</span></a>
+                            <ul class="submenu-angle page-mini-nb-dp" aria-expanded="false">
+                                <li><a title="Login" th:href="@{/login}"><span
+                                            class="mini-sub-pro">Login</span></a></li>
+                                <li><a title="Register" th:href="@{/register}"><span
+                                            class="mini-sub-pro">Register</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </nav>
+    </div>
+</div>

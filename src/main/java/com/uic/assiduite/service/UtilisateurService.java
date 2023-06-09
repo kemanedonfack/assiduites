@@ -29,6 +29,10 @@ public class UtilisateurService {
     public Utilisateurs getUserByEmail(String email) {
         return utilisateurRepository.findUtilisateursByEmail(email);
     }
+    
+    public Utilisateurs getUserByMatricule(String matricule){
+        return utilisateurRepository.findUtilisateursByMatricule(matricule);
+    }
 
     public Utilisateurs createUser(Utilisateurs user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());

@@ -20,11 +20,11 @@ public class QRCodeGenerator {
     public static void QRCodeGenerator(Utilisateurs user) throws WriterException, IOException {
         String qrCodePath = "E:\\Projet_tutoré\\assiduites\\src\\main\\resources\\images\\";
         String qrCodeName = qrCodePath + user.getNom() + user.getId() + "-QRCODE.png";
-        String urlprefix = "http://localhost:8080/api/attendance";
-        byte [] encodeMatricule = Base64.encodeBase64(user.getMatricule().getBytes());
+        String urlprefix = "http://localhost:8080/api/attendance/save/";
+        String encodeMatricule = new String(Base64.encodeBase64(user.getMatricule().getBytes()));
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitmatrix = qrCodeWriter.encode(
-                urlprefix+"?matricule="+new String(encodeMatricule), BarcodeFormat.QR_CODE, 250, 250
+                urlprefix+encodeMatricule, BarcodeFormat.QR_CODE, 250, 250
         );
         Path path = FileSystems.getDefault().getPath(qrCodeName);
         MatrixToImageWriter.writeToPath(bitmatrix, "PNG", path);
