@@ -1,7 +1,9 @@
 package com.uic.assiduite.model;
 
 import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,6 +20,7 @@ public class Utilisateurs implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotEmpty
+    @Column(unique = true)
     private String matricule;
     @NotEmpty
     private String nom;
@@ -28,9 +31,15 @@ public class Utilisateurs implements Serializable {
     @NotEmpty(message = "Email should not be empty")
     private String email;
     @NotEmpty(message = "Password should not be empty")
+    @JsonIgnore
     private String password;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Roles role;
+
+    @ManyToOne
+    @Nullable
+    @JoinColumn(name = "filiere_id")
+    private Filieres filieres;
 }

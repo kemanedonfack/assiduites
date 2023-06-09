@@ -1,14 +1,17 @@
 package com.uic.assiduite.controller;
 
 import com.google.zxing.WriterException;
+import com.uic.assiduite.model.AuthRequest;
 import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.service.UtilisateurService;
 import com.uic.assiduite.utils.QRCodeGenerator;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -17,40 +20,57 @@ import java.util.Optional;
 public class UtilisateurController {
 
     @Autowired
-    private UtilisateurService UtilisateurService;
+    private UtilisateurService utilisateurService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @GetMapping
     public List<Utilisateurs> getAllUsers() throws WriterException, IOException {
         // Générer le qrcode pour les étudiants
-        List<Utilisateurs> users = UtilisateurService.getAllUsers();
-        for(Utilisateurs user : users){
-            if("ETUDIANT".equals(user.getRole().getNom())){
+        List<Utilisateurs> users = utilisateurService.getAllUsers();
+        for (Utilisateurs user : users) {
+            if ("ETUDIANT".equals(user.getRole().getNom())) {
                 QRCodeGenerator.QRCodeGenerator(user);
             }
         }
-        return UtilisateurService.getAllUsers();
+        return utilisateurService.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Utilisateurs> getUserById(@PathVariable int id) {
-        Optional<Utilisateurs> optionalUser = UtilisateurService.getUserById(id);
+        Optional<Utilisateurs> optionalUser = utilisateurService.getUserById(id);
         return optionalUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Utilisateurs> login(@RequestBody AuthRequest request) {
+        try {
+            authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+            Utilisateurs utilisateurs = utilisateurService.getUserByEmail(request.getEmail());
+
+            return new ResponseEntity<>(utilisateurs, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
     }
 
     @PostMapping
     public Utilisateurs createUser(@RequestBody Utilisateurs user) {
-        return UtilisateurService.createUser(user);
+        return utilisateurService.createUser(user);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Utilisateurs> updateUser(@PathVariable int id, @RequestBody Utilisateurs user) {
-        Optional<Utilisateurs> optionalUser = UtilisateurService.updateUser(id, user);
+        Optional<Utilisateurs> optionalUser = utilisateurService.updateUser(id, user);
         return optionalUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable int id) {
-        boolean deleted = UtilisateurService.deleteUser(id);
+        boolean deleted = utilisateurService.deleteUser(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
         } else {

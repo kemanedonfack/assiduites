@@ -22,6 +22,10 @@ public class UtilisateurService {
         return utilisateurRepository.findAll();
     }
 
+    public List<Utilisateurs> getEtudiants() {
+        return utilisateurRepository.getEtudiants();
+    }
+
     public Optional<Utilisateurs> getUserById(int id) {
         return utilisateurRepository.findById(id);
     }
@@ -29,7 +33,7 @@ public class UtilisateurService {
     public Utilisateurs getUserByEmail(String email) {
         return utilisateurRepository.findUtilisateursByEmail(email);
     }
-    
+
     public Utilisateurs getUserByMatricule(String matricule){
         return utilisateurRepository.findUtilisateursByMatricule(matricule);
     }
