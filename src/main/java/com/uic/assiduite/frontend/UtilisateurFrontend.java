@@ -78,7 +78,23 @@ public class UtilisateurFrontend {
         model.addAttribute("users", users);
         return "users";
     }
+    
+    @GetMapping("/add-user")
+    public String showUserForm(Model model){
+        List<Roles> listRoles = roleService.getAllRoles();
+        model.addAttribute("listroles", listRoles);
+        return "add-user";
+    }
 
+    @GetMapping("/edit-user/{id}")
+    public String showEditForm(@PathVariable int id, Model model){
+        Utilisateurs user = utilisateurService.getUtilisateurById(id);
+        List<Roles> roles = roleService.getAllRoles();
+        model.addAttribute("roles", roles);
+        model.addAttribute("user", user);
+        return "edit-user";
+    }
+    
     @GetMapping("/login")
     public String login(){
         return "login";

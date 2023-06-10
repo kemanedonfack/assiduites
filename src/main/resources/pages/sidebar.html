@@ -15,36 +15,25 @@
                             </a>
                         </li>
                         <li>
-                            <a title="Landing Page" th:href="@{/request}" aria-expanded="false"><span
+                            <a title="Requêtes" th:href="@{/request}" aria-expanded="false"><span
                                     class="fa fa-envelope icon-wrap sub-icon-mg" aria-hidden="true"></span>
                                 <span class="mini-click-non">Requêtes</span></a>
                         </li>
                         <li>
-                            <a title="Landing Page" th:href="@{/events.html}" aria-expanded="false"><span
+                            <a title="Absences" th:href="@{/events.html}" aria-expanded="false"><span
                                     class="fa fa-list icon-wrap sub-icon-mg" aria-hidden="true"></span>
                                 <span class="mini-click-non">Absences</span></a>
                         </li>
                         <li>
-                            <a title="Landing Page" th:href="@{/attendance}" aria-expanded="false"><span
+                            <a title="Présences" th:href="@{/attendance}" aria-expanded="false"><span
                                     class="fa fa-pencil-square-o icon-wrap sub-icon-mg" aria-hidden="true"></span>
                                 <span class="mini-click-non">Présences</span></a>
                         </li>
                         <li>
-                            <a class="has-arrow" th:href="@{/all-professors.html}" aria-expanded="false"><span
-                                    class="fa fa-user icon-wrap"></span> <span
+                            <a title="Utilisateurs" th:href="@{/users}" aria-expanded="false"><span
+                                    class="fa fa-user icon-wrap sub-icon-mg"></span> <span
                                     class="mini-click-non">Utilisateurs</span></a>
-                            <ul class="submenu-angle" aria-expanded="false">
-                                <li><a title="All Professors" th:href="@{/users}"><span
-                                            class="mini-sub-pro">
-                                            Utilisateurs</span></a></li>
-                                <li><a title="Add Professor" th:href="@{/add-professor.html}"><span
-                                            class="mini-sub-pro">Nouvel Utilisateur</span></a></li>
-                                <li><a title="Edit Professor" th:href="@{/edit-professor.html}"><span
-                                            class="mini-sub-pro">Editer un utilisateur</span></a></li>
-                            </ul>
                         </li>
-
-
                         <li id="removable">
                             <a class="has-arrow" th:href="@{/#}" aria-expanded="false"><span
                                     class="fa fa-folder icon-wrap"></span> <span

@@ -29,6 +29,10 @@ public class UtilisateurService {
     public Optional<Utilisateurs> getUserById(int id) {
         return utilisateurRepository.findById(id);
     }
+    
+    public Utilisateurs getUtilisateurById(int id) {
+        return utilisateurRepository.findUtilisateursById(id);
+    }
 
     public Utilisateurs getUserByEmail(String email) {
         return utilisateurRepository.findUtilisateursByEmail(email);

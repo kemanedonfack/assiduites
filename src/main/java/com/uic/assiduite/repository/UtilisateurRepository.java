@@ -12,6 +12,8 @@ import java.util.Optional;
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateurs, Integer> {
 
+    Utilisateurs findUtilisateursById(int id);
+    
     Utilisateurs findUtilisateursByEmail(String email);
     
     Utilisateurs findUtilisateursByMatricule(String matricule);
