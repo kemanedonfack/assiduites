@@ -1,11 +1,16 @@
 package com.uic.assiduite.frontend;
 
+import com.uic.assiduite.model.Assiduites;
 import com.uic.assiduite.model.Attendance;
+import com.uic.assiduite.model.Filieres;
+import com.uic.assiduite.service.AssiduiteService;
 import com.uic.assiduite.service.AttendanceService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import com.uic.assiduite.service.FiliereService;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,20 +28,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AttendanceFrontend {
 
     @Autowired
-    private AttendanceService attendanceService;
+    private AssiduiteService assiduiteService;
+    @Autowired
+    private FiliereService filiereService;
 
-    @GetMapping("/attendance")
+    @GetMapping("/attendances")
     public String showAttendance(Model model){
-        List<Attendance> attendances = attendanceService.getAllAttendance();
-        model.addAttribute("attendance", attendances);
-        return "attendances/attendance";
+        List<Assiduites> assiduites = assiduiteService.getAllAssiduites();
+        model.addAttribute("listassiduites", assiduites);
+        List<Filieres> filieres = filiereService.getAllFilieres();
+        model.addAttribute("listfiliere", filieres);
+        return "attendances";
     }
-    
-    @PostMapping("/attendance/save")
-    public String saveAttendance(HttpServletRequest request, HttpServletResponse response, @Valid @ModelAttribute("attendance") Attendance attendance, BindingResult result, Model model){
-        String matricule = request.getParameter("matricule");
-        String decodeMatricule = new String(Base64.decodeBase64(matricule.getBytes()));
-        attendanceService.createAttendance(decodeMatricule, attendance);
-        return "redirect:/attendances/attendance?success";
-    }
+
 }

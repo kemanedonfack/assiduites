@@ -1,9 +1,11 @@
 package com.uic.assiduite.frontend;
 
 import com.uic.assiduite.dto.UtilisateurDto;
+import com.uic.assiduite.model.Filieres;
 import com.uic.assiduite.model.Roles;
 import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.service.CustomUserDetailsService;
+import com.uic.assiduite.service.FiliereService;
 import com.uic.assiduite.service.RoleService;
 import com.uic.assiduite.service.UtilisateurService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,20 +28,51 @@ public class UtilisateurFrontend {
     
     @Autowired
     private UtilisateurService utilisateurService;
-
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
-
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private FiliereService filiereService;
+
+    @GetMapping("/")
+    public String home(){
+        return "dashboard";
+    }
+
+    @GetMapping("/enseignants")
+    public String enseignants(Model model){
+        Utilisateurs utilisateur = new Utilisateurs();
+        List<Utilisateurs> utilisateurs = utilisateurService.getEnseignants();
+        model.addAttribute("listenseignants", utilisateurs);
+        model.addAttribute("utilisateur", utilisateur);
+        return "enseignants";
+    }
+    @GetMapping("/etudiants")
+    public String etudiants(Model model){
+        Utilisateurs utilisateur = new Utilisateurs();
+        List<Utilisateurs> utilisateurs = utilisateurService.getEtudiants();
+        List<Filieres> filieres = filiereService.getAllFilieres();
+        model.addAttribute("listfiliere", filieres);
+        model.addAttribute("listetudiants", utilisateurs);
+        model.addAttribute("utilisateur", utilisateur);
+        return "etudiants";
+    }
+    @GetMapping("/administrateurs")
+    public String administrateurs(Model model){
+        Utilisateurs utilisateur = new Utilisateurs();
+        List<Utilisateurs> utilisateurs = utilisateurService.getAdministrateurs();
+        model.addAttribute("listadministrateurs", utilisateurs);
+        model.addAttribute("utilisateur", utilisateur);
+        return "administrateurs";
+    }
 
     @GetMapping("/index")
     public String home(Model model) {
         List<Utilisateurs> utilisateurs = utilisateurService.getAllUsers();
         model.addAttribute("utilisateurs", utilisateurs);
-        return "index";
+        return "dashboard";
     }
 
     @GetMapping("/register")
@@ -65,11 +98,17 @@ public class UtilisateurFrontend {
             model.addAttribute("utilisateur", utilisateur);
             return "/register";
         }
+
+        if (roleName.equals("ETUDIANT")){
+            String filiereCode = request.getParameter("filiereCode");
+            Filieres filieres = filiereService.getFiliereByCode(filiereCode);
+            utilisateur.setFilieres(filieres);
+        }
         Roles role = roleService.getRoleByName(roleName);
         utilisateur.setRole(role);
 
         utilisateurService.createUser(utilisateur);
-        return "redirect:/register?success";
+        return "dashboard";
     }
 
     @GetMapping("/users")
