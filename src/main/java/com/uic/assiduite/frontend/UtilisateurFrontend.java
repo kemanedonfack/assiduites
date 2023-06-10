@@ -1,5 +1,7 @@
 package com.uic.assiduite.frontend;
 
+import com.google.zxing.WriterException;
+import com.uic.assiduite.configuration.QRCodeGenerator;
 import com.uic.assiduite.dto.UtilisateurDto;
 import com.uic.assiduite.model.Filieres;
 import com.uic.assiduite.model.Roles;
@@ -8,6 +10,7 @@ import com.uic.assiduite.service.CustomUserDetailsService;
 import com.uic.assiduite.service.FiliereService;
 import com.uic.assiduite.service.RoleService;
 import com.uic.assiduite.service.UtilisateurService;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,10 +55,19 @@ public class UtilisateurFrontend {
         return "enseignants";
     }
     @GetMapping("/etudiants")
-    public String etudiants(Model model){
+    public String etudiants(Model model) throws IOException, WriterException {
         Utilisateurs utilisateur = new Utilisateurs();
         List<Utilisateurs> utilisateurs = utilisateurService.getEtudiants();
         List<Filieres> filieres = filiereService.getAllFilieres();
+
+        List<String> qrCodeBase64List = new ArrayList<>();
+        for (Utilisateurs etudiant : utilisateurs) {
+            byte[] qrCodeBytes = QRCodeGenerator.generateQRCodeImage(etudiant.getMatricule(), 300, 300);
+            String qrCodeBase64 = Base64.encodeBase64String(qrCodeBytes);
+            qrCodeBase64List.add(qrCodeBase64);
+        }
+
+        model.addAttribute("qrCodeBase64List", qrCodeBase64List);
         model.addAttribute("listfiliere", filieres);
         model.addAttribute("listetudiants", utilisateurs);
         model.addAttribute("utilisateur", utilisateur);

@@ -29,6 +29,7 @@
           <table class="table table-striped custom-table mb-0 datatable">
             <thead>
             <tr>
+              <th>QRCode</th>
               <th>Nom</th>
               <th>Prénom</th>
               <th>Matricule</th>
@@ -37,7 +38,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="etudiant : ${listetudiants}" >
+            <tr th:each="etudiant, qrCodeIndex : ${listetudiants}" >
+              <td>
+                <a th:href="@{'data:image/png;base64,' + ${qrCodeBase64List[qrCodeIndex.index]}}" download="qrcode.png">
+                  <img th:src="@{'data:image/png;base64,' + ${qrCodeBase64List[qrCodeIndex.index]}}" width="50" height="50" alt="QR Code">
+                </a>
+              </td>
               <td th:text="${etudiant.nom}"></td>
               <td th:text="${etudiant.prenom}"></td>
               <td th:text="${etudiant.matricule}"></td>
