@@ -12,7 +12,7 @@
       <div class="page-header">
         <div class="row">
           <div class="col-sm-12">
-            <h3 class="page-title">Bienvenue Admin!</h3>
+            <h3 class="page-title">Bienvenue <span th:text="${session.nomUtilisateur}"></span></h3>
             <ul class="breadcrumb">
               <li class="breadcrumb-item active">Tableau de bord</li>
             </ul>
@@ -26,30 +26,8 @@
             <div class="card-body">
               <span class="dash-widget-icon"><i class="fa fa-cubes"></i></span>
               <div class="dash-widget-info">
-                <h3>112</h3>
-                <span>Projects</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-          <div class="card dash-widget">
-            <div class="card-body">
-              <span class="dash-widget-icon"><i class="fa fa-usd"></i></span>
-              <div class="dash-widget-info">
-                <h3>44</h3>
-                <span>Clients</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-          <div class="card dash-widget">
-            <div class="card-body">
-              <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
-              <div class="dash-widget-info">
-                <h3>37</h3>
-                <span>Tasks</span>
+                <h3 th:text="${nbreFilieres}"></h3>
+                <span>Filières</span>
               </div>
             </div>
           </div>
@@ -59,104 +37,30 @@
             <div class="card-body">
               <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
               <div class="dash-widget-info">
-                <h3>218</h3>
-                <span>Employees</span>
+                <h3 th:text="${nbreAdministrateur}"></h3>
+                <span>Administrateurs</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-6 text-center">
-              <div class="card">
-                <div class="card-body">
-                  <h3 class="card-title">Total Revenue</h3>
-                  <div id="bar-charts"></div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 text-center">
-              <div class="card">
-                <div class="card-body">
-                  <h3 class="card-title">Sales Overview</h3>
-                  <div id="line-charts"></div>
-                </div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+          <div class="card dash-widget">
+            <div class="card-body">
+              <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+              <div class="dash-widget-info">
+                <h3 th:text="${nbreEtudiants}"></h3>
+                <span>Etudiants</span>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card-group m-b-30">
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                  <div>
-                    <span class="d-block">New Employees</span>
-                  </div>
-                  <div>
-                    <span class="text-success">+10%</span>
-                  </div>
-                </div>
-                <h3 class="mb-3">10</h3>
-                <div class="progress mb-2" style="height: 5px;">
-                  <div class="progress-bar bg-primary" role="progressbar" style="width: 70%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mb-0">Overall Employees 218</p>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                  <div>
-                    <span class="d-block">Earnings</span>
-                  </div>
-                  <div>
-                    <span class="text-success">+12.5%</span>
-                  </div>
-                </div>
-                <h3 class="mb-3">$1,42,300</h3>
-                <div class="progress mb-2" style="height: 5px;">
-                  <div class="progress-bar bg-primary" role="progressbar" style="width: 70%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mb-0">Previous Month <span class="text-muted">$1,15,852</span></p>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                  <div>
-                    <span class="d-block">Expenses</span>
-                  </div>
-                  <div>
-                    <span class="text-danger">-2.8%</span>
-                  </div>
-                </div>
-                <h3 class="mb-3">$8,500</h3>
-                <div class="progress mb-2" style="height: 5px;">
-                  <div class="progress-bar bg-primary" role="progressbar" style="width: 70%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mb-0">Previous Month <span class="text-muted">$7,500</span></p>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                  <div>
-                    <span class="d-block">Profit</span>
-                  </div>
-                  <div>
-                    <span class="text-danger">-75%</span>
-                  </div>
-                </div>
-                <h3 class="mb-3">$1,12,000</h3>
-                <div class="progress mb-2" style="height: 5px;">
-                  <div class="progress-bar bg-primary" role="progressbar" style="width: 70%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mb-0">Previous Month <span class="text-muted">$1,42,000</span></p>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+          <div class="card dash-widget">
+            <div class="card-body">
+              <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+              <div class="dash-widget-info">
+                <h3 th:text="${nbreEnseignants}"></h3>
+                <span>Enseignants</span>
               </div>
             </div>
           </div>
@@ -164,6 +68,31 @@
       </div>
 
       <div class="row">
+        <div class="col-md-12 col-lg-6 col-xl-4 d-flex">
+          <div class="card flex-fill">
+            <div class="card-body">
+              <h4 class="card-title">Assiduités d'aujourd'hui <span class="badge bg-inverse-danger ms-2" th:text="${#lists.size(listassiduites)}"></span></h4>
+              <div th:each="assiduite : ${listassiduites}" class="leave-info-box">
+                <div class="media d-flex align-items-center">
+                  <a href="" class="avatar"><img alt src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/img/user.jpg"></a>
+                  <div class="media-body flex-grow-1">
+                    <div class="text-sm my-0" th:text="${assiduite.utilisateurs.nom}"></div>
+                  </div>
+                </div>
+                <div class="row align-items-center mt-3">
+                  <div class="col-6">
+                    <h6 class="mb-0" th:text=" ${assiduite.periode}"></h6>
+                    <span class="text-sm text-muted" th:text=" ${assiduite.dateJour}" >Leave Date</span>
+                  </div>
+                  <div class="col-6 text-end">
+                    <span th:if="${assiduite.nbreHeure == 0}" class="badge bg-inverse-danger">Absent</span>
+                    <span th:if="${assiduite.nbreHeure != 0}" class="badge bg-inverse-success">Présent</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="col-md-12 col-lg-12 col-xl-4 d-flex">
           <div class="card flex-fill dash-statistics">
             <div class="card-body">
@@ -236,50 +165,6 @@
                 <p><i class="fa fa-dot-circle-o text-success me-2"></i>On Hold Tasks <span class="float-end">31</span></p>
                 <p><i class="fa fa-dot-circle-o text-danger me-2"></i>Pending Tasks <span class="float-end">47</span></p>
                 <p class="mb-0"><i class="fa fa-dot-circle-o text-info me-2"></i>Review Tasks <span class="float-end">5</span></p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-12 col-lg-6 col-xl-4 d-flex">
-          <div class="card flex-fill">
-            <div class="card-body">
-              <h4 class="card-title">Today Absent <span class="badge bg-inverse-danger ms-2">5</span></h4>
-              <div class="leave-info-box">
-                <div class="media d-flex align-items-center">
-                  <a href="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/profile" class="avatar"><img alt src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/img/user.jpg"></a>
-                  <div class="media-body flex-grow-1">
-                    <div class="text-sm my-0">Martin Lewis</div>
-                  </div>
-                </div>
-                <div class="row align-items-center mt-3">
-                  <div class="col-6">
-                    <h6 class="mb-0">4 Sep 2019</h6>
-                    <span class="text-sm text-muted">Leave Date</span>
-                  </div>
-                  <div class="col-6 text-end">
-                    <span class="badge bg-inverse-danger">Pending</span>
-                  </div>
-                </div>
-              </div>
-              <div class="leave-info-box">
-                <div class="media d-flex align-items-center">
-                  <a href="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/profile" class="avatar"><img alt src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/img/user.jpg"></a>
-                  <div class="media-body flex-grow-1">
-                    <div class="text-sm my-0">Martin Lewis</div>
-                  </div>
-                </div>
-                <div class="row align-items-center mt-3">
-                  <div class="col-6">
-                    <h6 class="mb-0">4 Sep 2019</h6>
-                    <span class="text-sm text-muted">Leave Date</span>
-                  </div>
-                  <div class="col-6 text-end">
-                    <span class="badge bg-inverse-success">Approved</span>
-                  </div>
-                </div>
-              </div>
-              <div class="load-more text-center">
-                <a class="text-dark" href="javascript:void(0);">Load More</a>
               </div>
             </div>
           </div>

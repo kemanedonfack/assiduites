@@ -4,6 +4,7 @@ import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.repository.RoleRepository;
 import com.uic.assiduite.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -65,4 +66,14 @@ public class UtilisateurService {
         utilisateurRepository.deleteById(id);
         return true;
     }
+    public Long counEtudiant(){
+        return utilisateurRepository.counEtudiant();
+    }
+    public Long countEnseignant(){
+        return utilisateurRepository.countEnseignant();
+    }
+    public Long countAdministrateur(){
+        return utilisateurRepository.countAdministrateur();
+    }
+
 }

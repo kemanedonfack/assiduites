@@ -40,4 +40,8 @@ public class AssiduiteService {
     public List<Assiduites> getAssiduitesByFiliereAndDate(String codeFiliere, LocalDate date){
         return assiduiteRepository.findAssiduitesByFiliereAndDate(codeFiliere, date);
     }
+
+    public List<Assiduites> getAssiduitesDate(LocalDate date){
+        return assiduiteRepository.findTop3AssiduitesByDateJour(date);
+    }
 }

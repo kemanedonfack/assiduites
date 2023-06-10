@@ -72,14 +72,14 @@
 
             <li class="nav-item dropdown has-arrow main-drop">
                 <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-<span class="user-img"><img src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/img/profiles/avatar-21.jpg" alt>
+<span class="user-img"><img src="https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg" alt>
 <span class="status online"></span></span>
-                    <span>Admin</span>
+                    <span th:text="${session.nomUtilisateur}"></span>
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/profile">My Profile</a>
-                    <a class="dropdown-item" href="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/settings">Settings</a>
-                    <a class="dropdown-item" href="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/auth-login">Logout</a>
+                    <a class="dropdown-item" href="">My Profile</a>
+                    <a class="dropdown-item" href="">Settings</a>
+                    <a class="dropdown-item" href="/logout">Déconnexion</a>
                 </div>
             </li>
         </ul>

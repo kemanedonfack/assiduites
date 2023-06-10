@@ -3,16 +3,16 @@ package com.uic.assiduite.frontend;
 import com.google.zxing.WriterException;
 import com.uic.assiduite.configuration.QRCodeGenerator;
 import com.uic.assiduite.dto.UtilisateurDto;
+import com.uic.assiduite.model.Assiduites;
 import com.uic.assiduite.model.Filieres;
 import com.uic.assiduite.model.Roles;
 import com.uic.assiduite.model.Utilisateurs;
-import com.uic.assiduite.service.CustomUserDetailsService;
-import com.uic.assiduite.service.FiliereService;
-import com.uic.assiduite.service.RoleService;
-import com.uic.assiduite.service.UtilisateurService;
+import com.uic.assiduite.service.*;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,11 +42,42 @@ public class UtilisateurFrontend {
     private RoleService roleService;
     @Autowired
     private FiliereService filiereService;
+    @Autowired
+    private AssiduiteService assiduiteService;
 
     @GetMapping("/")
-    public String home(){
+    public String home( HttpSession session, Model model){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        Utilisateurs utilisateurs = utilisateurService.getUserByEmail(email);
+
+        LocalDate currentDate = LocalDate.now();
+        List<Assiduites> listassiduites = assiduiteService.getAssiduitesDate(currentDate);
+
+        String filieres = filiereService.countFiliere().toString();
+        String etudiants = utilisateurService.counEtudiant().toString();
+        String enseignants = utilisateurService.countEnseignant().toString();
+        String administrateur = utilisateurService.countAdministrateur().toString();
+
+        model.addAttribute("listassiduites", listassiduites);
+        model.addAttribute("nbreFilieres", filieres);
+        model.addAttribute("nbreEtudiants", etudiants);
+        model.addAttribute("nbreEnseignants", enseignants);
+        model.addAttribute("nbreAdministrateur", administrateur);
+        session.setAttribute("nomUtilisateur", utilisateurs.getNom());
         return "dashboard";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // Supprimez toutes les données de session liées à l'utilisateur connecté
+        session.invalidate();
+
+        // Redirigez vers la page de connexion ou une autre page appropriée
+        return "redirect:/login";
+    }
+
 
     @GetMapping("/enseignants")
     public String enseignants(Model model){

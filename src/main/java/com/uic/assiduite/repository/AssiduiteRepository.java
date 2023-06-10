@@ -19,4 +19,5 @@ public interface AssiduiteRepository extends JpaRepository<Assiduites, Integer> 
     Optional<Assiduites> findByUtilisateursAndDateJour(Utilisateurs utilisateur, LocalDate dateJour);
     @Query("SELECT a FROM Assiduites a WHERE a.utilisateurs.filieres.code = :filiereCode AND a.dateJour = :dateJour")
     List<Assiduites> findAssiduitesByFiliereAndDate(@Param("filiereCode") String filiereCode, @Param("dateJour") LocalDate dateJour);
+    List<Assiduites> findTop3AssiduitesByDateJour(LocalDate dateJour);
 }

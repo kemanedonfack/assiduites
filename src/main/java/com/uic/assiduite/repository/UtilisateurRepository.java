@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface UtilisateurRepository extends JpaRepository<Utilisateurs, Integer> {
 
     Utilisateurs findUtilisateursByEmail(String email);
-    
+
     Utilisateurs findUtilisateursByMatricule(String matricule);
 
     @Query("SELECT u FROM Utilisateurs u JOIN u.role r WHERE r.nom = 'ETUDIANT'")
@@ -24,5 +24,11 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateurs, Integ
 
     @Query("SELECT u FROM Utilisateurs u JOIN u.role r WHERE r.nom = 'ENSEIGNANT'")
     List<Utilisateurs> getEnseignants();
+    @Query("SELECT COUNT(u) FROM Utilisateurs u WHERE u.role.nom = 'ETUDIANT'")
+    Long counEtudiant();
+    @Query("SELECT COUNT(u) FROM Utilisateurs u WHERE u.role.nom = 'ENSEIGNANT'")
+    Long countEnseignant();
+    @Query("SELECT COUNT(u) FROM Utilisateurs u WHERE u.role.nom = 'ADMINISTRATEUR'")
+    Long countAdministrateur();
 
 }
