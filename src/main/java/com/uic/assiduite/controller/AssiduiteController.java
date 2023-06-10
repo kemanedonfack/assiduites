@@ -36,6 +36,9 @@ public class AssiduiteController {
         LocalDateTime now = LocalDateTime.now();
         String periode = determinePeriode(now.toLocalTime());
 
+        if (periode.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         if (assiduiteService.isDayInit(currentDate, periode)) {
             // Une entrée existe déjà pour la date actuelle,
             // vous pouvez décider ici d'ignorer l'opération ou de lancer une exception
@@ -64,6 +67,9 @@ public class AssiduiteController {
             LocalDateTime now = LocalDateTime.now();
             String periode = determinePeriode(now.toLocalTime());
 
+            if (periode.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
             Optional<Assiduites> assiduites = assiduiteService.getAssiduiteByUtilisateurPeriodeDate(getUser, currentDate, periode);
             if (assiduites.isPresent()){
                 assiduites.get().setNbreHeure(0);
@@ -79,7 +85,7 @@ public class AssiduiteController {
         }
 
     }
-    @GetMapping("day/{matricule}/{date}")
+        @GetMapping("day/{matricule}/{date}")
     public ResponseEntity<Assiduites> getAssiduite(@PathVariable String matricule, @PathVariable String date) {
         Utilisateurs getUser = utilisateurService.getUserByMatricule(matricule);
 
@@ -109,7 +115,7 @@ public class AssiduiteController {
         } else if (currentTime.isAfter(startAfternoon) && currentTime.isBefore(endAfternoon)) {
             return "13h - 16h";
         } else {
-            return "Autre période";
+            return "";
         }
     }
 

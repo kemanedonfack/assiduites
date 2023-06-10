@@ -25,6 +25,12 @@ public class UtilisateurService {
     public List<Utilisateurs> getEtudiants() {
         return utilisateurRepository.getEtudiants();
     }
+    public List<Utilisateurs> getAdministrateurs() {
+        return utilisateurRepository.getAdministrateurs();
+    }
+    public List<Utilisateurs> getEnseignants() {
+        return utilisateurRepository.getEnseignants();
+    }
 
     public Optional<Utilisateurs> getUserById(int id) {
         return utilisateurRepository.findById(id);

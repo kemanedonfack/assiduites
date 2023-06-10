@@ -18,4 +18,11 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateurs, Integ
 
     @Query("SELECT u FROM Utilisateurs u JOIN u.role r WHERE r.nom = 'ETUDIANT'")
     List<Utilisateurs> getEtudiants();
+
+    @Query("SELECT u FROM Utilisateurs u JOIN u.role r WHERE r.nom = 'ADMINISTRATEUR'")
+    List<Utilisateurs> getAdministrateurs();
+
+    @Query("SELECT u FROM Utilisateurs u JOIN u.role r WHERE r.nom = 'ENSEIGNANT'")
+    List<Utilisateurs> getEnseignants();
+
 }

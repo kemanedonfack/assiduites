@@ -25,7 +25,7 @@ public class AssiduiteService {
         return assiduiteRepository.existsByDateJourAndPeriode(dateJour, periode);
     }
 
-    public List<Assiduites> getAssiduites() {
+    public List<Assiduites> getAllAssiduites() {
         return assiduiteRepository.findAll();
     }
 
