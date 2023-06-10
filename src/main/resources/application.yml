@@ -7,8 +7,8 @@ spring:
     prefix: classpath:/pages/
   datasource:
     url: jdbc:mysql://localhost:3306/assiduite
-    username: julie
-    password: admin
+    username: root
+    password: kemane
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

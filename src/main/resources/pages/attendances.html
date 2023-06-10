@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<div th:replace="includes/header :: header"></div>
+
+<div th:replace="includes/sidebar :: sidebar"></div>
+
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Présences</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Tableau de bord</a></li>
+                        <li class="breadcrumb-item active">Présences</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row filter-row">
+            <div class="col-sm-6 col-md-3">
+                <div class="form-group form-focus">
+                    <div class="cal-icon">
+                        <input name="date" class="form-control floating datetimepicker" type="text">
+                    </div>
+                    <label class="focus-label">Date</label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="form-group custom-select">
+                    <select class="select floating">
+                        <option th:each="filiere : ${listfiliere}" th:value="${filiere.code}" th:text="${filiere.code}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="d-grid">
+                    <a href="#" class="btn btn-success"> Afficher </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table table-nowrap mb-0">
+                        <thead>
+                        <tr>
+                            <th>Nom & Prénom</th>
+                            <th>Matricule</th>
+                            <th>Email</th>
+                            <th>9h - 12h</th>
+                            <th>13h - 16h</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="assiduite : ${listassiduites}">
+                            <td th:text="${assiduite.utilisateurs.nom + ' ' + assiduite.utilisateurs.prenom}"></td>
+                            <td th:text="${assiduite.utilisateurs.matricule}"></td>
+                            <td th:text="${assiduite.utilisateurs.email}"></td>
+                            <td>
+                                <i th:if="${assiduite.periode == '9h - 12h' && assiduite.nbreHeure == 0}" class="fa fa-check text-success"></i>
+                                <i th:if="${assiduite.periode == '9h - 12h' && assiduite.nbreHeure != 0}" class="fa fa-close text-danger"></i>
+                            </td>
+                            <td>
+                                <i th:if="${assiduite.periode == '13h - 16h' && assiduite.nbreHeure == 0}" class="fa fa-check text-success"></i>
+                                <i th:if="${assiduite.periode == '13h - 16h' && assiduite.nbreHeure != 0}" class="fa fa-close text-danger"></i>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/jquery-3.6.0.min.js"></script>
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/jquery.slimscroll.min.js"></script>
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/select2.min.js"></script>
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/moment.min.js"></script>
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js"></script>
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/jquery-ui.min.js"></script>
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/fullcalendar.min.js"></script>
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/jquery.fullcalendar.js"></script>
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/jquery.dataTables.min.js"></script>
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/dataTables.bootstrap4.min.js"></script>
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/validation.init.js"></script>
+
+<script src="https://smarthr.dreamguystech.com/codeigniter/template/orange/public/assets/js/app.js"></script>
+
+</body>
+</html>
