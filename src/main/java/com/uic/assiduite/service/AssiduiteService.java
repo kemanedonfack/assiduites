@@ -37,4 +37,7 @@ public class AssiduiteService {
         return assiduiteRepository.findByUtilisateursAndDateJour(utilisateur, dateJour);
     }
 
+    public List<Assiduites> getAssiduitesByFiliereAndDate(String codeFiliere, LocalDate date){
+        return assiduiteRepository.findAssiduitesByFiliereAndDate(codeFiliere, date);
+    }
 }

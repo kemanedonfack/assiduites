@@ -20,28 +20,30 @@
             </div>
         </div>
 
-        <div class="row filter-row">
-            <div class="col-sm-6 col-md-3">
-                <div class="form-group form-focus">
-                    <div class="cal-icon">
-                        <input name="date" class="form-control floating datetimepicker" type="text">
+        <form th:action="@{/attendances/filter}" method="post">
+            <div class="row filter-row">
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group form-focus">
+                        <div class="cal-icon">
+                            <input name="date" class="form-control floating datetimepicker" type="text">
+                        </div>
+                        <label class="focus-label">Date</label>
                     </div>
-                    <label class="focus-label">Date</label>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="form-group custom-select">
+                        <select name="filiereCode" class="select floating">
+                            <option th:each="filiere : ${listfiliere}" th:value="${filiere.code}" th:text="${filiere.code}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success"> Afficher </button>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-3">
-                <div class="form-group custom-select">
-                    <select class="select floating">
-                        <option th:each="filiere : ${listfiliere}" th:value="${filiere.code}" th:text="${filiere.code}"></option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3">
-                <div class="d-grid">
-                    <a href="#" class="btn btn-success"> Afficher </a>
-                </div>
-            </div>
-        </div>
+        </form>
 
         <div class="row">
             <div class="col-lg-12">
