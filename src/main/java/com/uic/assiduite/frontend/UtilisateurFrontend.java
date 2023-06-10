@@ -54,12 +54,14 @@ public class UtilisateurFrontend {
 
         LocalDate currentDate = LocalDate.now();
         List<Assiduites> listassiduites = assiduiteService.getAssiduitesDate(currentDate);
+        List<Utilisateurs> listutilisateurs = utilisateurService.getAllUsers();
 
         String filieres = filiereService.countFiliere().toString();
         String etudiants = utilisateurService.counEtudiant().toString();
         String enseignants = utilisateurService.countEnseignant().toString();
         String administrateur = utilisateurService.countAdministrateur().toString();
 
+        model.addAttribute("listutilisateurs", listutilisateurs);
         model.addAttribute("listassiduites", listassiduites);
         model.addAttribute("nbreFilieres", filieres);
         model.addAttribute("nbreEtudiants", etudiants);
