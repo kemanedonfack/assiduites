@@ -8,6 +8,7 @@ pipeline {
               sh 'mvn test'
            }
         }
+        
         stage('Build & Package spring app') {
            steps {
              sh 'mvn clean'
