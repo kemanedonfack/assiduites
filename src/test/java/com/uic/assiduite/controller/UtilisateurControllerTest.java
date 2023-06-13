@@ -1,6 +1,7 @@
 package com.uic.assiduite.controller;
 
 import com.google.zxing.WriterException;
+import com.uic.assiduite.controller.UtilisateurController;
 import com.uic.assiduite.model.AuthRequest;
 import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.service.UtilisateurService;
@@ -11,11 +12,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -26,7 +29,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class UtilisateurControllerTest {
 
     @InjectMocks
