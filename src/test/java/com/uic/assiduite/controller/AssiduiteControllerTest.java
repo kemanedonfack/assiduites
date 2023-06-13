@@ -4,17 +4,14 @@ import com.uic.assiduite.model.Assiduites;
 import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.service.AssiduiteService;
 import com.uic.assiduite.service.UtilisateurService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,8 +22,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class AssiduiteControllerTest {
 
     @InjectMocks
@@ -38,49 +33,11 @@ public class AssiduiteControllerTest {
     @Mock
     private AssiduiteService assiduiteService;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
 
-   /* @Test
-    public void testInitDay_WithValidData_ShouldReturnOk() {
-        // Arrange
-        LocalDate currentDate = LocalDate.now();
-        LocalDateTime now = LocalDateTime.now();
-        String periode = "9h - 12h";
-        List<Utilisateurs> mockEtudiants = Arrays.asList(new Utilisateurs(), new Utilisateurs());
-
-        when(utilisateurService.getEtudiants()).thenReturn(mockEtudiants);
-        when(assiduiteService.isDayInit(currentDate, periode)).thenReturn(false);
-
-        // Act
-        ResponseEntity<Void> response = assiduiteController.initDay();
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }*/
-
-   /* @Test
-    public void testSetPresent_WithValidMatricule_ShouldReturnOk() {
-        // Arrange
-        String matricule = "123456";
-        Utilisateurs mockUser = new Utilisateurs();
-        mockUser.setMatricule(matricule);
-        LocalDate currentDate = LocalDate.now();
-        LocalDateTime now = LocalDateTime.now();
-        String periode = "9h - 12h";
-        Optional<Assiduites> mockAssiduites = Optional.of(new Assiduites());
-
-        when(utilisateurService.getUserByMatricule(matricule)).thenReturn(mockUser);
-        when(assiduiteService.getAssiduiteByUtilisateurPeriodeDate(mockUser, currentDate, periode)).thenReturn(mockAssiduites);
-
-        // Act
-        ResponseEntity<Void> response = assiduiteController.setPresent(matricule);
-
-        // Assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }*/
 
     @Test
     public void testGetAssiduite_WithValidMatriculeAndDate_ShouldReturnAssiduite() {
@@ -141,4 +98,3 @@ public class AssiduiteControllerTest {
         assertNull(response.getBody());
     }
 }
-

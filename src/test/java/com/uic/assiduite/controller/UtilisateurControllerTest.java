@@ -1,36 +1,27 @@
 package com.uic.assiduite.controller;
 
-import com.google.zxing.WriterException;
-import com.uic.assiduite.controller.UtilisateurController;
 import com.uic.assiduite.model.AuthRequest;
 import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.service.UtilisateurService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
 public class UtilisateurControllerTest {
 
     @InjectMocks
@@ -42,24 +33,10 @@ public class UtilisateurControllerTest {
     @Mock
     private AuthenticationManager authenticationManager;
 
-    @Before
+    @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
-
-    /*@Test
-    public void testGetAllUsers_ShouldReturnAllUsers() throws WriterException, IOException {
-        // Arrange
-        List<Utilisateurs> mockUsers = Arrays.asList(new Utilisateurs(), new Utilisateurs());
-
-        when(utilisateurService.getAllUsers()).thenReturn(mockUsers);
-
-        // Act
-        List<Utilisateurs> result = utilisateurController.getAllUsers();
-
-        // Assert
-        assertEquals(mockUsers.size(), result.size());
-    }*/
 
     @Test
     public void testGetUserById_WithValidId_ShouldReturnUser() {
@@ -211,4 +188,3 @@ public class UtilisateurControllerTest {
         assertNull(response.getBody());
     }
 }
-
