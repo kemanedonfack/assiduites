@@ -14,12 +14,24 @@ pipeline {
         }
         
         stage('Build & Package & store artefact to s3') {
-           steps { 
-             
+           steps {              
              sh 'mvn clean'
              sh 'mvn install -DskipTests '
              sh 'aws s3 cp target/*.jar s3://jenkins-bucket-i-0121489bb6176b65f/${artifactName}'
            }
         }
+        
+        stage('Build Docker image') {
+           steps {
+              sh 'docker build -t lugar2020/assiduites:${gitCommit}'
+           }
+        }
+        
+        stage('Vulnerability scan') {
+           steps {
+              sh 'trivy --no-progress --exit-code 1 --severity HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
+           }
+        }
+        
     }
 }
