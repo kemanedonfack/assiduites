@@ -23,7 +23,7 @@ pipeline {
         
         stage('Build Docker image') {
            steps {
-             sh 'sudo -S docker build -t lugar2020/assiduites:${gitCommit} .'
+             sh 'sudo docker build -t lugar2020/assiduites:${gitCommit} .'
            }
         }
         
