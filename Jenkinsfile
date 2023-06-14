@@ -13,7 +13,7 @@ pipeline {
            }
         }
         
-        stage('Build & Package spring app') {
+        stage('Build & Package & store artefact to s3') {
            steps { 
              
              sh 'mvn clean'
