@@ -23,6 +23,7 @@ pipeline {
         
         stage('Build Docker image') {
            steps {
+               sh 'docker run hello-world'
               sh 'docker build -t lugar2020/assiduites:${gitCommit} .'
            }
         }
