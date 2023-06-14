@@ -13,16 +13,17 @@ pipeline {
            }
         }
         
-        stage('Build & Package & store artefact to s3') {
-           steps {              
-             sh 'mvn clean'
-             sh 'mvn install -DskipTests '
-             sh 'aws s3 cp target/*.jar s3://jenkins-bucket-i-0937a4e54faf8a279/${artifactName}'
-           }
-        }
+//         stage('Build & Package & store artefact to s3') {
+//            steps {              
+//              sh 'mvn clean'
+//              sh 'mvn install -DskipTests '
+//              sh 'aws s3 cp target/*.jar s3://jenkins-bucket-i-0937a4e54faf8a279/${artifactName}'
+//            }
+//         }
         
         stage('Build Docker image') {
            steps {
+               sh 'pwd'
              sh 'docker build -t lugar2020/assiduites:${gitCommit} .'
            }
         }
