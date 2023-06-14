@@ -1,6 +1,8 @@
-def gitCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-def artifactName = "your-app-${gitCommit}.jar"
 pipeline {
+    environment {
+        def gitCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+        def artifactName = "your-app-${gitCommit}.jar"
+    }
     agent any
 
     stages {
