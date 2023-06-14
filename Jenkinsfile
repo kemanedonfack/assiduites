@@ -29,7 +29,7 @@ pipeline {
         
         stage('Vulnerability scan') {
            steps {
-              sh 'trivy image lugar2020/assiduites:${gitCommit}'
+              sh 'trivy image --scanners vuln lugar2020/assiduites:${gitCommit}'
            }
         }
         
