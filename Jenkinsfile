@@ -10,9 +10,12 @@ pipeline {
         }
         
         stage('Build & Package spring app') {
-           steps {
+           steps {             
              sh 'mvn clean'
              sh 'mvn install -DskipTests '
+             def gitCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+             def artifactName = "your-app-${gitCommit}.jar"
+             sh 'aws s3 cp target/your-app.jar s3://jenkins-bucket-i-0121489bb6176b65f/${artifactName}'
            }
         }
     }
