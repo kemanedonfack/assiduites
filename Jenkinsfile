@@ -23,7 +23,6 @@ pipeline {
         
         stage('Build Docker image') {
            steps {
-               sh 'pwd'
              sh 'docker build -t lugar2020/assiduites:${gitCommit} .'
            }
         }
