@@ -23,13 +23,13 @@ pipeline {
         
         stage('Build Docker image') {
            steps {
-              sh 'docker build -t lugar2020/assiduites:${gitCommit} .'
+              sh 'sudo docker build -t lugar2020/assiduites:${gitCommit} .'
            }
         }
         
         stage('Vulnerability scan') {
            steps {
-              sh 'trivy image --scanners vuln lugar2020/assiduites:${gitCommit}'
+              sh 'sudo trivy image --scanners vuln lugar2020/assiduites:${gitCommit}'
            }
         }
         
