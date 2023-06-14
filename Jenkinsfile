@@ -17,7 +17,7 @@ pipeline {
            steps {              
              sh 'mvn clean'
              sh 'mvn install -DskipTests '
-             sh 'aws s3 cp target/*.jar s3://jenkins-bucket-i-059932faefe82c443/${artifactName}'
+             sh 'aws s3 cp target/*.jar s3://jenkins-bucket-i-03986d5142210adbb/${artifactName}'
            }
         }
         
