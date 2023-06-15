@@ -29,7 +29,7 @@ pipeline {
         
         stage('Vulnerability scan') {
            steps {
-              sh 'trivy image --scanners vuln lugar2020/assiduites:${gitCommit}'
+              sh 'trivy image --no-progress --exit-code 1 --severity HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
            }
         }
         
