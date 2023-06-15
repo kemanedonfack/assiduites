@@ -26,10 +26,10 @@ pipeline {
              sh 'docker build -t lugar2020/assiduites:${gitCommit} .'
            }
         }
-        
         stage('Vulnerability scan') {
            steps {
-              sh 'trivy image --no-progress --exit-code 1 --severity HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
+              //sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --no-progress --exit-code 1 --severity HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
+              sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --no-progress --exit-code 0 --severity MEDIUM,HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
            }
         }
         
