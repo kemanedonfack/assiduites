@@ -30,8 +30,8 @@ pipeline {
         stage('Vulnerability scan & copy report to s3') {
            steps {
               //sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --no-progress --exit-code 1 --severity HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
-              sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --no-progress --exit-code 0 --severity MEDIUM,HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
-              sh 'aws s3 cp report-${gitCommit}.html ${s3buckect}/report-${gitCommit}.html'
+              sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report-${gitCommit}.html --no-progress --exit-code 0 --severity MEDIUM,HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
+              sh 'aws s3 cp report-${gitCommit}.html ${s3buckect}/'
            }
         }
         
