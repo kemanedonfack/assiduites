@@ -19,6 +19,13 @@
           </div>
           <div class="col-auto float-end ms-auto">
             <a href="#" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_leave"><i class="fa fa-plus"></i> Ajouter</a>
+            <a th:href="@{/administrateurs/export}" class="btn btn-primary"><i class="fa fa-download"></i> Exporter CSV</a>
+            <form method="post" enctype="multipart/form-data" th:action="@{/administrateurs/import}">
+              <input type="file" name="file" accept=".csv" required/>
+              <button type="submit">Import</button>
+<!--              <input type="file" name="file" accept=".csv" style="display: none;" id="csvFileInput">-->
+<!--              <label for="csvFileInput" class="btn btn-primary"><i class="fa fa-upload"></i> Importer CSV</label>-->
+            </form>
           </div>
         </div>
       </div>

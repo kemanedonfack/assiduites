@@ -10,6 +10,6 @@ COPY --from=build /app/target/*.jar /app/my-spring-boot-app.jar
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 # Exposer le port utilisé par l'application
-EXPOSE 8080
+EXPOSE 8090
 # Démarrer l'application
 CMD ["java", "-jar", "my-spring-boot-app.jar"]

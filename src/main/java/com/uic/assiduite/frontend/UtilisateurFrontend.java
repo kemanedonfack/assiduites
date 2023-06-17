@@ -1,6 +1,7 @@
 package com.uic.assiduite.frontend;
 
 import com.google.zxing.WriterException;
+import com.opencsv.CSVWriter;
 import com.uic.assiduite.configuration.QRCodeGenerator;
 import com.uic.assiduite.dto.UtilisateurDto;
 import com.uic.assiduite.model.Assiduites;
@@ -8,6 +9,7 @@ import com.uic.assiduite.model.Filieres;
 import com.uic.assiduite.model.Roles;
 import com.uic.assiduite.model.Utilisateurs;
 import com.uic.assiduite.service.*;
+import jdk.jshell.execution.Util;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,12 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +47,7 @@ public class UtilisateurFrontend {
     private FiliereService filiereService;
     @Autowired
     private AssiduiteService assiduiteService;
+
 
     @GetMapping("/")
     public String home( HttpSession session, Model model){
@@ -192,6 +196,60 @@ public class UtilisateurFrontend {
         return "redirect:/index";
     }
 
+    @GetMapping("/administrateurs/export")
+    public void exportAdministrateurs(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=\"administrateurs.csv\"");
+
+        List<Utilisateurs> administrateurs = utilisateurService.getAdministrateurs();// Remplacez par votre propre logique de récupération des administrateurs
+
+        CSVWriter csvWriter = new CSVWriter(response.getWriter());
+
+        // Écriture de l'en-tête du fichier CSV
+        String[] header = {"Nom", "Prénom", "Matricule", "Email", "Password"};
+        csvWriter.writeNext(header);
+
+        // Écriture des données des administrateurs dans le fichier CSV
+        for (Utilisateurs administrateur : administrateurs) {
+            String[] data = {administrateur.getNom(), administrateur.getPrenom(), administrateur.getMatricule(), administrateur.getEmail(), administrateur.getPassword()};
+            csvWriter.writeNext(data);
+        }
+
+        csvWriter.close();
+    }
+
+    @PostMapping("/administrateurs/import")
+    public String importCSV(MultipartFile file) throws IOException {
+        List<Utilisateurs> administrateurs = parseCSV(file);
+
+        for (Utilisateurs utilisateur : administrateurs) {
+            utilisateurService.createUser(utilisateur);
+        }
+
+        return "redirect:/administrateurs"; // Rediriger vers la page des administrateurs après l'importation
+    }
+
+    private List<Utilisateurs> parseCSV(MultipartFile file) throws IOException {
+        List<Utilisateurs> administrateurs = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length == 4) {
+                    Utilisateurs administrateur = new Utilisateurs();
+                    administrateur.setNom(data[0]);
+                    administrateur.setPrenom(data[1]);
+                    administrateur.setMatricule(data[2]);
+                    administrateur.setEmail(data[3]);
+                    administrateur.setPassword(data[4]);
+
+                    administrateurs.add(administrateur);
+                }
+            }
+        }
+        return administrateurs;
+    }
 
 
 
