@@ -2,7 +2,7 @@ pipeline {
     environment {
         def gitCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
         def artifactName = "assiduite-${gitCommit}.jar"
-        def s3buckect = "jenkins-bucket-i-0e0f240a651cb39ba"
+        def s3buckect = "jenkins-bucket-i-00ad8e4d61febb468"
     }
     agent any
 
