@@ -3,6 +3,8 @@ pipeline {
         def gitCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
         def artifactName = "assiduite-${gitCommit}.jar"
         def s3buckect = "s3://jenkins-bucket-for-artifact-devsecops-pipeline"
+        def imageTag="625243961866.dkr.ecr.eu-north-1.amazonaws.com/repositorykemane:${gitCommit}"
+        def ecrRepo="625243961866.dkr.ecr.eu-north-1.amazonaws.com/repositorykemane"
     }
     agent any
 
@@ -24,14 +26,23 @@ pipeline {
         
         stage('Build Docker image') {
            steps {
-             sh 'docker build -t lugar2020/assiduites:${gitCommit} .'
+             sh 'docker build -t assiduites:${gitCommit} .'
            }
         }
+
         stage('Vulnerability scan & copy report to s3') {
            steps {
               //sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --no-progress --exit-code 1 --severity HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
               sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report-${gitCommit}.html --no-progress --exit-code 0 --severity MEDIUM,HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
               sh 'aws s3 cp report-${gitCommit}.html ${s3buckect}/'
+           }
+        }
+
+        stage('Push image to ecr') {
+           steps {
+              sh 'aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin ${ecrRepo}'
+              sh 'docker tag assiduites:${gitCommit} ${imageTag}'
+              sh 'docker push ${imageTag}'
            }
         }
         
