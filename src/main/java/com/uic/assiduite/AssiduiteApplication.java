@@ -1,8 +1,10 @@
 package com.uic.assiduite;
 
+import com.uic.assiduite.model.Assiduites;
 import com.uic.assiduite.model.Filieres;
 import com.uic.assiduite.model.Roles;
 import com.uic.assiduite.model.Utilisateurs;
+import com.uic.assiduite.service.AssiduiteService;
 import com.uic.assiduite.service.FiliereService;
 import com.uic.assiduite.service.RoleService;
 import com.uic.assiduite.service.UtilisateurService;
@@ -23,6 +25,9 @@ public class AssiduiteApplication implements CommandLineRunner {
 	private UtilisateurService utilisateurService;
 	@Autowired
 	private FiliereService filiereService;
+
+	@Autowired
+	private AssiduiteService assiduiteService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AssiduiteApplication.class, args);
