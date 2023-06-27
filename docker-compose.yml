@@ -12,7 +12,7 @@ services:
     restart: always
 
   assiduite:
-    image: assiduites:d1a263b
+    image: assiduites:docker_tag
     restart: always
     ports:
       - 8090:8090

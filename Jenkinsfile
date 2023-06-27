@@ -41,6 +41,9 @@ pipeline {
 
         stage('owasp zap scan & save report') {
             steps {
+                sh ''' final_tag=$(echo ${gitCommit} | tr -d ' ')
+                    sed -i "s/docker_tag/$final_tag/g" docker-compose.yml
+                '''
                 sh 'bash zap.sh'
                 sh 'aws s3 cp zap_report-${gitCommit}.html ${s3buckect}/'
             }
