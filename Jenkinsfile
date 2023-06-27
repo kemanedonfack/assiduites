@@ -3,9 +3,10 @@ pipeline {
         def gitCommit = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
         def artifactName = "assiduite-${gitCommit}.jar"
         def s3buckect = "s3://jenkins-bucket-for-artifact-devsecops-pipeline"
-        def ecrRepo="<number>.dkr.ecr.eu-north-1.amazonaws.com/assiduite"
+        def ecrRepo="625243961866.dkr.ecr.eu-north-1.amazonaws.com/assiduite"
         def imageTag="${ecrRepo}:${gitCommit}"
         def region="eu-north-1"
+        def jenkinsInstanceIp="ip"
     }
     agent any
 
@@ -49,13 +50,13 @@ pipeline {
             }
         }
 
-        /* stage('Push image to ecr') {
+        stage('Push image to ecr') {
            steps {
               sh 'aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${ecrRepo}'
               sh 'docker tag assiduites:${gitCommit} ${imageTag}'
               sh 'docker push ${imageTag}'
            }
-        } */
+        }
         
     }
 }
