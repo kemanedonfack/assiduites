@@ -44,8 +44,6 @@ pipeline {
                 sh ''' final_tag=$(echo ${gitCommit} | tr -d ' ')
                     sed -i "s/docker_tag/$final_tag/g" docker-compose.yml
                 '''
-                sh 'docker compose up'
-                sh 'sleep 10'
                 sh 'bash zap.sh'
                 sh 'aws s3 cp zap_report-${gitCommit}.html ${s3buckect}/'
             }
