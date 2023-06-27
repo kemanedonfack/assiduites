@@ -39,7 +39,7 @@ pipeline {
            }
         }
 
-        stage('owasp zap scan') {
+        stage('owasp zap scan & save report') {
             steps {
                 sh 'bash zap.sh'
                 sh 'aws s3 cp zap_report-${gitCommit}.html ${s3buckect}/'
