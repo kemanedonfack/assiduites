@@ -6,9 +6,9 @@ spring:
     suffix: .html
     prefix: classpath:/pages/
   datasource:
-    url: jdbc:mysql://localhost:3306/assiduite
-    username: root
-    password: kemane
+    url: jdbc:mysql://${DB_HOST:localhost:3306}/${DB_NAME:assiduite}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:kemane}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
