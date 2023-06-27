@@ -39,6 +39,15 @@ pipeline {
            }
         }
 
+        stage('owasp zap scan') {
+            steps {
+                sh 'docker pull owasp/zap2docker-weekly'
+                sh 'chmod 777 $(pwd)'
+                sh 'docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t  http://13.49.76.44:8090/v3/api-docs -f openapi -r zap_report-${gitCommit}.html'
+                sh 'aws s3 cp zap_report-${gitCommit}.html ${s3buckect}/'
+            }
+        }
+
         /* stage('Push image to ecr') {
            steps {
               sh 'aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${ecrRepo}'
