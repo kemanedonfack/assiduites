@@ -6,7 +6,6 @@ pipeline {
         def ecrRepo="<>.dkr.ecr.eu-north-1.amazonaws.com/assiduite"
         def imageTag="${ecrRepo}:${gitCommit}"
         def region="eu-north-1"
-        def jenkinsInstanceIp="ip"
     }
     agent any
 
