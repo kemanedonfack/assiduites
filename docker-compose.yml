@@ -12,7 +12,7 @@ services:
     restart: always
 
   assiduite:
-    image: zencaisse:docker_tag
+    image: assiduites:d1a263b
     restart: always
     ports:
       - 8090:8090
