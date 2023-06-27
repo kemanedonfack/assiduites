@@ -22,6 +22,6 @@ services:
       - mysqldb
     environment:
       DB_HOST: mysqldb:3306
-      DB_NAME: db_zencaisse
+      DB_NAME: db_assiduite
       DB_USERNAME: root
       DB_PASSWORD: kemane
