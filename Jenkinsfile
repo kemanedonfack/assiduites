@@ -39,13 +39,13 @@ pipeline {
            }
         }
 
-        stage('Push image to ecr') {
+        /* stage('Push image to ecr') {
            steps {
               sh 'aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${ecrRepo}'
               sh 'docker tag assiduites:${gitCommit} ${imageTag}'
               sh 'docker push ${imageTag}'
            }
-        }
+        } */
         
     }
 }
