@@ -6,7 +6,7 @@ sleep 10
 chmod 777 $(pwd)
 
 # comment above cmd and uncomment below lines to run with CUSTOM RULES
-docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t  http://16.171.114.195/:8090/v3/api-docs -f openapi -r zap_report-${gitCommit}.html
+docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t  http://16.171.114.195:8090/v3/api-docs -f openapi -r zap_report-${gitCommit}.html
 exit_code=$?
 
 
