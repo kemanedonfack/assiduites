@@ -20,3 +20,4 @@ echo "Exit Code : $exit_code"
    else
     echo "OWASP ZAP did not report any Risk"
  fi;
+docker compose down
