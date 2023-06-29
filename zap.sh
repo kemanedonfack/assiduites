@@ -16,8 +16,9 @@ echo "Exit Code : $exit_code"
 
  if [[ ${exit_code} -ne 0 ]];  then
     echo "OWASP ZAP Report has either Low/Medium/High Risk. Please check the HTML Report"
+    docker compose down
     exit 0;
    else
+     docker compose down
     echo "OWASP ZAP did not report any Risk"
  fi;
-docker compose down
