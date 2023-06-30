@@ -2,11 +2,15 @@
 
 docker compose up -d
 sleep 10
-
+# first run this
 chmod 777 $(pwd)
 
+# comment above cmd and uncomment below lines to run with CUSTOM RULES
 docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-weekly zap-api-scan.py -t  http://13.53.38.180:8090/v3/api-docs -f openapi -r zap_report-${gitCommit}.html
 exit_code=$?
+
+
+# HTML Report
 
 echo "Exit Code : $exit_code"
 
