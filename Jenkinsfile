@@ -7,6 +7,7 @@ pipeline {
         def imageTag="${ecrRepo}:${gitCommit}"
         def imageLatest="${ecrRepo}:latest"
         def region="eu-north-1"
+        def ip="16.171.62.245"
     }
 
     agent any
