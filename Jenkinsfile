@@ -8,8 +8,6 @@ pipeline {
         def imageLatest="${ecrRepo}:latest"
         def region="eu-north-1"
         def ip="13.49.46.99"
-        def sonarurl="http://16.171.112.206:9000/"
-        def sonarlogin="kemane"
     }
 
     agent any
@@ -19,9 +17,9 @@ pipeline {
             steps{
                 withSonarQubeEnv('SonarQube-server') {
                     sh '''mvn clean verify sonar:sonar \
-                    -Dsonar.projectKey=devsecops-pipeline \
-                    -Dsonar.host.url=$sonarurl \
-                    -Dsonar.login=$sonarlogin'''
+                      -Dsonar.projectKey=devsecops-pipeline \
+                      -Dsonar.host.url=http://16.171.112.206:9000 \
+                      -Dsonar.login=sqp_552e69feffb678c365381e5ef2eb1222e29e094a'''
                 }
             }
         }
