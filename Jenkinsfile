@@ -21,16 +21,12 @@ pipeline {
                       -Dsonar.host.url=http://16.171.112.206:9000 \
                       -Dsonar.login=sqp_552e69feffb678c365381e5ef2eb1222e29e094a'''
                 }
-            }
-        }
-        stage("Quality Gate") {
-            steps {
-              timeout(time: 2, unit: 'MINUTES') {
+                timeout(time: 2, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
               }
             }
-          }
-
+        }
+        
         stage('Unit Tests') {
            steps {
               sh 'mvn test'
