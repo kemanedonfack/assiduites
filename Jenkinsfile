@@ -13,11 +13,15 @@ pipeline {
     agent any
 
     stages {
-
         stage('SonarQube Analysis') {
-           steps {
-              sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=devsecops-pipeline'
-           }
+            steps{
+                withSonarQubeEnv('SonarQube-server') {
+                    sh '''mvn clean verify sonar:sonar \
+                    -Dsonar.projectKey=devsecops-pipeline \
+                    -Dsonar.host.url=$sonarurl \
+                    -Dsonar.login=$sonarlogin'''
+                }
+            }
         }
 
         stage('Unit Tests') {
