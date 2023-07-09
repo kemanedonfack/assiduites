@@ -8,6 +8,8 @@ pipeline {
         def imageLatest="${ecrRepo}:latest"
         def region="eu-north-1"
         def ip="13.49.46.99"
+        def sonarurl="http://16.171.112.206:9000/"
+        def sonarlogin="kemane"
     }
 
     agent any
