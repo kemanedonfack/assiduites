@@ -15,7 +15,9 @@ pipeline {
     stages {
 
         stage('SonarQube Analysis') {
-            sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=devsecops-pipeline'
+           steps {
+              sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=devsecops-pipeline'
+           }
         }
 
         stage('Unit Tests') {
