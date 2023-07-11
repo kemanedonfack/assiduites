@@ -52,6 +52,14 @@ pipeline {
            }
         }
 
+        stage('stop and delete last version') {
+           steps {
+             sh 'docker compose down'
+             //sh 'docker rmi assiduites || echo "success : image delete"'
+             sh 'docker rmi docker rmi $(docker images | grep assiduites) --force || echo "success : image delete"'
+           }
+        }
+
         stage('owasp zap scan & save report') {
             steps {
                 sh ''' final_tag=$(echo ${gitCommit} | tr -d ' ')
