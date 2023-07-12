@@ -43,12 +43,14 @@ pipeline {
            steps {
              sh 'docker compose down'
              //sh 'docker rmi assiduites || echo "success : image delete"'
-            def images = sh(script: 'docker images | grep assiduite | awk \'{print $3}\'', returnStdout: true).trim()
-            if (images) {
-                sh 'echo "$images" | xargs docker rmi'
-            } else {
-                echo 'Aucune image Docker contenant "assiduite" trouvée.'
-            }
+             script {
+                def images = sh(script: 'docker images | grep assiduite | awk \'{print $3}\'', returnStdout: true).trim()
+                if (images) {
+                    sh 'docker rmi $images'
+                } else {
+                    echo 'Aucune image correspondante trouvée. Continuer sans supprimer.'
+                }
+             }
            }
         }
 
