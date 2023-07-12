@@ -47,7 +47,7 @@ pipeline {
              script {
                 def images = sh(script: 'docker images | grep assiduite | awk \'{print $3}\'', returnStdout: true).trim()
                 if (images) {
-                    sh "echo '${images}' | xargs -r docker rmi"
+                    sh "echo '${images}' | xargs -r docker rmi -f"
                 } else {
                     echo 'No image found.'
                 }
