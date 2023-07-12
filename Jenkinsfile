@@ -43,7 +43,7 @@ pipeline {
            steps {
              sh 'docker compose down'
              //sh 'docker rmi assiduites || echo "success : image delete"'
-             sh 'docker images | grep assiduite | awk '{print $3}' | xargs docker rmi'
+             sh 'docker images | grep assiduite | awk "{print $3}" | xargs docker rmi'
            }
         }
 
