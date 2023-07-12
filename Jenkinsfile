@@ -13,16 +13,6 @@ pipeline {
     agent any
 
     stages {
-        stage('SonarQube Analysis') {
-            steps{
-                withSonarQubeEnv('SonarQube-server') {
-                    sh '''mvn clean verify sonar:sonar \
-                      -Dsonar.projectKey=devsecops-pipeline \
-                      -Dsonar.host.url=http://16.171.112.206:9000 \
-                      -Dsonar.login=sqp_552e69feffb678c365381e5ef2eb1222e29e094a'''
-                }
-            }
-        }
         
         stage('Unit Tests') {
            steps {
@@ -37,7 +27,26 @@ pipeline {
               sh 'aws s3 cp target/*.jar ${s3buckect}/${artifactName}'
             }
          }
-        
+
+        /* stage('SonarQube Analysis') {
+            steps{
+                withSonarQubeEnv('SonarQube-server') {
+                    sh '''mvn clean verify sonar:sonar \
+                      -Dsonar.projectKey=devsecops-pipeline \
+                      -Dsonar.host.url=http://16.171.112.206:9000 \
+                      -Dsonar.login=sqp_552e69feffb678c365381e5ef2eb1222e29e094a'''
+                }
+            }
+        } */
+
+        stage('stop and delete last version') {
+           steps {
+             sh 'docker compose down'
+             //sh 'docker rmi assiduites || echo "success : image delete"'
+             sh 'docker rmi docker rmi $(docker images | grep assiduites) --force || echo "success : image delete"'
+           }
+        }
+
         stage('Build Docker image') {
            steps {
              sh 'docker build -t assiduites:${gitCommit} .'
@@ -49,14 +58,6 @@ pipeline {
               //sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report.html --no-progress --exit-code 1 --severity HIGH,CRITICAL lugar2020/assiduites:${gitCommit}'
               sh 'trivy image --format template --template "@/usr/local/share/trivy/templates/html.tpl" -o report-${gitCommit}.html --no-progress --exit-code 0 --severity MEDIUM,HIGH,CRITICAL assiduites:${gitCommit}'
               sh 'aws s3 cp report-${gitCommit}.html ${s3buckect}/'
-           }
-        }
-
-        stage('stop and delete last version') {
-           steps {
-             sh 'docker compose down'
-             //sh 'docker rmi assiduites || echo "success : image delete"'
-             sh 'docker rmi docker rmi $(docker images | grep assiduites) --force || echo "success : image delete"'
            }
         }
 
