@@ -18,6 +18,8 @@ pipeline {
         
         stage('Unit Tests') {
            steps {
+              sh '${aws_access_key}'
+              sh '${aws_secret_key}'
               sh 'mvn test'
            }
         }
