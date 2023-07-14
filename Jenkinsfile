@@ -20,6 +20,7 @@ pipeline {
            steps {
                dir('terraform'){               
                   sh 'terraform init'
+                  sh 'echo \'terraform plan -var=\'access_key=${aws_access_key}\' -var=\'secret_key=${aws_secret_key}\' \' '
                   sh 'terraform plan -var=\'access_key=${aws_access_key}\' -var=\'secret_key=${aws_secret_key}\' '
                   sh 'terraform apply -var=\'access_key=${aws_access_key}\' -var=\'secret_key=${aws_secret_key}\' '
                }
