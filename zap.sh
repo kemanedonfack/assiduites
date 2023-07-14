@@ -1,7 +1,7 @@
 #!/bin/bash
 
 docker compose up -d
-sleep 5
+sleep 10
 # first run this
 chmod 777 $(pwd)
 
