@@ -15,6 +15,16 @@ pipeline {
     agent any
 
     stages {
+
+         stage('Deploy on ecs') {
+           steps {
+               dir('terraform'){               
+                  sh 'terraform init'
+                  sh 'terraform plan -var=\'access_key=${aws_access_key}\' -var=\'secret_key=${aws_secret_key}\' '
+                  sh 'terraform apply -var=\'access_key=${aws_access_key}\' -var=\'secret_key=${aws_secret_key}\' '
+               }
+           }
+        }
         
         stage('Unit Tests') {
            steps {
@@ -89,15 +99,6 @@ pipeline {
            }
         }
 
-        stage('Deploy on ecs') {
-           steps {
-               dir('terraform'){               
-                  sh 'terraform init'
-                  sh 'terraform plan -var=\'access_key=${aws_access_key}\' -var=\'secret_key=${aws_secret_key}\' '
-                  sh 'terraform apply -var=\'access_key=${aws_access_key}\' -var=\'secret_key=${aws_secret_key}\' '
-               }
-           }
-        }
-        
+               
     }
 }
