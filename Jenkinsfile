@@ -18,8 +18,6 @@ pipeline {
         
         stage('Unit Tests') {
            steps {
-              sh '${aws_access_key}'
-              sh '${aws_secret_key}'
               sh 'mvn test'
            }
         }
@@ -88,6 +86,14 @@ pipeline {
               sh 'docker tag assiduites:${gitCommit} ${imageLatest}'
               sh 'docker push ${imageTag}'
               sh 'docker push ${imageLatest}'
+           }
+        }
+
+        stage('Deploy on ecs') {
+           steps {
+              sh 'terraform init'
+              sh 'terraform plan -var=\'access_key=${aws_access_key}\' -var=\'secret_key=${aws_secret_key}\' '
+              sh 'terraform apply -var=\'access_key=${aws_access_key}\' -var=\'secret_key=${aws_secret_key}\' '
            }
         }
         
